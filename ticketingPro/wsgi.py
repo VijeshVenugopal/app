@@ -12,8 +12,13 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
+from whitenoise.django import DjangoWhiteNoise
+
+
+
 sys.path.append('/home/suyati/jango_pro/ticketingPro/static/mymedia')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ticketingPro.settings")
 
 application = get_wsgi_application()
+application = DjangoWhiteNoise(application)

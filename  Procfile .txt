@@ -1,1 +1,1 @@
-web: gunicorn ticketingPro.wsgi --log-file -
+web: gunicorn ticketingPro:wsgi --log-file -

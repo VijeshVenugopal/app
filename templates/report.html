@@ -1,0 +1,124 @@
+{% extends 'userbase.html' %}
+
+{% block content %}
+
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading panel-default">
+		<form action="." method="post" name="myForm"  id="myForm" enctype="multipart/form-data">
+	{% csrf_token %}
+		<div class="row">
+							<div class="col-sm-4">
+								<label for="prio">Priority:</label>
+									 <div id="prio">
+							  		{{property.priority}}
+									</div>
+							</div>
+							<div class="col-sm-4">
+								<label for="typ">Type:</label>
+									 <div id="typ">
+							  			{{property.type}}
+									</div>
+							</div>
+							<div class="col-sm-4">
+								<label for="sta">Status:</label>
+									 <div id="sta">
+							  		
+							  		{{property.status}}
+							  		
+									</div>
+							</div>
+							
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+
+				<br>
+
+				<label >Search by date:</label>
+				<br/>From {{ property.start_date }} <br/>
+			</div>
+			<div class="col-sm-4">
+			<br>		
+			<label></label>
+			<br>To {{ property.end_date }}</br>
+			</div>
+			<div class="col-sm-4">
+				<label for="sta"></label>
+				<div id="sta">
+				
+				
+					<button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>&nbsp&nbsp
+					<a class="btn btn-primary" role="button" href="/report"><span class="glyphicon glyphicon-refresh"></span> Reset</a>	
+				</div>
+				
+			</div>
+
+
+
+		</div>
+						
+
+		</form>			
+		</div>
+		<div class="panel-body">
+
+			{% if ticket_list %}
+			
+			
+
+				<div class="table-responsive">          
+				  <table class="table">
+				    <thead>
+				      <tr>
+				      
+				        <th>Title</th>				      
+				        <th>Type</th>
+				        <th>Status</th>
+				        <th>Priority</th>
+				        {% if request.user.is_staff %}
+						<th>Created User</th>
+				        {% endif %}
+				        <th>Created Date</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+
+				{% for ticket in ticket_list %}
+
+					
+				      <tr>
+				     
+				        <td>{{ticket.title}}</td>
+				        <td>{{ticket.type}}</td>
+				        <td>{{ticket.status}}</td>
+				        <td>{{ticket.priority}}</td>
+				        {% if request.user.is_staff %}
+						<th>{{ticket.user_name}}</th>
+				        {% endif %}
+				        <td>{{ticket.created_date_time}}</td>
+				      </tr>
+				    
+
+				{% endfor %}
+					</tbody>
+
+				</div>
+
+			
+			{% endif %}
+
+			{% if not ticket_list %}
+				<div class="alert alert-warning">
+			  		<strong>No results </strong> 
+				</div>
+			{% endif  %}
+				
+	</div>
+			
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends 'userbase.html' %}
+
+{% block content %}
+
+<div class="container" style="margin-top: -20px">
+	<div class="row">
+		<h2 class="alert alert-info" style="background-color: #337ab7;color: White">{{myticket.title}}</h2> 
+	</div>
+	<!-- panel for type priority status buttons  -->
+	<div class="row">
+		<div class="panel panel-info" style="margin-top: -10px">
+	    <div class="panel-body">
+	    <div class="row">
+	    	<div class="col-sm-3">
+	    		<div class="row text-center">
+	    			TYPE
+	    		</div>
+	    		<div class="row text-center" style="margin-top: 10px">
+	    			<button type="button" class="btn btn-primary" disabled>{{myticket.type}}</button>
+	    		</div>
+	    		
+	    	</div>
+	    	<div class="col-sm-3">
+	    		<div class="row text-center">
+	    			STATUS
+	    		</div>
+	    		<div class="row text-center" style="margin-top: 10px">
+	    			<button type="button" class="btn btn-primary " disabled>{{myticket.status}}</button>
+	    		</div>
+	    		
+	    	</div>
+	    	<div class="col-sm-3">
+	    		<div class="row text-center">
+	    			PRIORITY
+	    		</div>
+	    		<div class="row text-center" style="margin-top: 10px">
+	    			<button type="button" class="btn btn-primary" disabled>{{myticket.priority}}</button>
+	    		</div>
+	    		
+	    	</div>
+	    	<div class="col-sm-3">
+	    		<div class="row text-center">
+	    			STAFF
+	    		</div>
+	    		<div class="row text-center" style="margin-top: 10px">
+	    			<button type="button" class="btn btn-primary" disabled>{{initial.assign}}</button>
+	    		</div>
+	    		
+	    	</div>
+	    </div>
+
+	    </div>
+	    <div class="panel-footer panel-info">Reported by {{initial.created.first_name}} on {{myticket.created_date_time}}</div>
+		</div>
+	</div>
+	<!-- end of panel for status type buttons -->
+
+	<!-- ****************************************  -->
+
+	<!-- panel for ticket details -->
+   <div class="row">
+   		<div class="chip">
+  <img src="/static/mymedia/img_avatar.png" alt="Person" width="96" height="96">
+  {{initial.created.first_name}}
+</div>
+   </div>
+
+<div class="row pre-scrollable">
+<div class="panel-group" id="accordion">
+{%for a in initial.detail%}
+
+	<div class="panel panel-info">
+
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{a.ticket_detail_id}}">{{a.user_name}} commented on {{a.created_date_time}}</a>
+		</div>
+		<div id="collapse{{a.ticket_detail_id}}" class="panel-collapse collapse {{a.style}}">
+	  	<div class="panel-body">
+		  	<p>
+			{{a.ticket_text}}
+		  	</p>
+				
+	  	</div>
+	  	
+	    <div class="panel-footer panel-info">
+	 		 {% for file in a.files %}
+				Attachment : <a href="/{{file.file_name}}">{{file.original_file_name}}</a>
+				{% endfor %}
+	  	</div>
+	  	</div>
+	</div>
+	{%endfor%}
+</div>
+</div>
+
+	<!-- end of panel for ticket details -->
+<form action="." method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="row">
+
+	 <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#menu1">Ticket Properties</a></li>
+    <li><a data-toggle="pill" href="#menu2">Attachments</a></li>
+  </ul>
+  
+  		<div class="tab-content">
+    		<div id="menu1" class="tab-pane fade in active">
+      
+				<div class="panel panel-info">
+					
+					<div class="panel-body">
+
+						
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="typ">Type:</label>
+									 <div id="typ">
+							  			{{form1.type}}
+									</div>
+							</div>
+							<div class="col-sm-3">
+								<label for="sta">Status:</label>
+									 <div id="sta">
+							  		
+							  		{{form1.status}}
+							  		
+									</div>
+							</div>
+							<div class="col-sm-3">
+								<label for="prio">Priority:</label>
+									 <div id="prio">
+							  		{{form1.priority}}
+									</div>
+							</div>
+							<div class="col-sm-3">
+								<label for="prio">Staff:</label>
+									 <div id="prio">
+							  		{{form1.assign}}
+									</div>	
+							</div>
+						</div>
+							
+															
+					</div>
+				</div>
+    		</div>
+    			<div id="menu2" class="tab-pane fade">
+		      <div class="panel panel-info">
+					<div class="panel-body">
+						<div class="container">
+							<div class="row"> 
+								<div class="col-sm-12">
+								Drag and drop files to attach.
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px">
+								<div class="col-sm-12">
+									<div class="fileinput fileinput-new" data-provides="fileinput">
+									    <span class="btn btn-default btn-file"><span>Choose file</span>{{form1.file}}</span>
+									    <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+    			</div>
+  		</div>
+	</div>
+	<div class="row">
+		<label for="id_ticket_text">Comment:</label>
+		<textarea class="form-control" rows="2" id="id_ticket_text" name="ticket_text" style="resize: none"></textarea>
+		<span class="text-muted col-md-12">Additional Information</span>
+		
+	</div>
+	<div class="row" style="margin-left: 10px;margin-top: 10px"> 
+	
+		
+		<button class="btn btn-success" type="submit">Update Ticket</button>
+
+<a class="btn btn-danger" href="/tickets" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span> Cancel</a>
+			{% if error %}
+		<span class="alert alert-danger" style="margin-left: 20px"> 
+		  Please enter a comment.
+		</span>
+{% endif %}
+	</div>
+</form>
+ 
+</div>
+
+
+{% endblock %}

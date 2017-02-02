@@ -1,0 +1,4 @@
+<html>
+hai i am jobin,
+now lets have a look in to the features of our project.
+clicking on the new ticket the user will be redirected to create ticket page.

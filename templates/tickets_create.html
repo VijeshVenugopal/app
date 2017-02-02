@@ -1,0 +1,109 @@
+{% extends 'userbase.html' %}
+
+{% block content %}
+
+<div class="container" style="margin-top: 15px">
+
+	<div class="panel panel-info">
+	
+	<form action="{% url 'tickets_create' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+		<div class="panel-heading panel-info">New Ticket</div>
+		<div class="panel-body">
+		
+			<label for="id_title">Summary:</label>
+			<textarea class="form-control" rows="2" id="id_title" name="title" style="resize: none"></textarea>
+			<span class="col-md-12 text-muted">Enter a brief description about this ticket</span>
+			<label for="id_ticket_text" style="margin-top: 20px">Additional Information:</label>
+			<textarea class="form-control" rows="2" id="id_ticket_text" name="ticket_text" style="resize: none"></textarea>
+			<span class="text-muted col-md-12">(Optional)</span>
+
+				<div class="panel panel-default" style="margin-top: 50px">
+					<div class="panel-heading">Ticket Properties</div>
+					<div class="panel-body" style="background-color: #f5f5f5;">
+
+						
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="typ">Type:</label>
+									 <div id="typ">
+							  			{{form1.type}}
+									</div>
+							</div>
+							<div class="col-sm-3">
+								<label for="sta">Status:</label>
+									 <div id="sta">
+							  		
+							  		{{form1.status}}
+							  		
+									</div>
+							</div>
+							<div class="col-sm-3">
+								<label for="prio">Priority:</label>
+									 <div id="prio">
+							  		{{form1.priority}}
+									</div>
+							</div>
+							<div class="col-sm-3">
+								<label for="prio">Staff:</label>
+									 <div id="prio">
+							  		{{form1.assign}}
+									</div>	
+							</div>
+						</div>
+							
+															
+					</div>
+				</div>
+				<div class="panel panel-default" style="margin-top: 50px">
+				<div class="panel-heading">Attachments</div>
+					<div class="panel-body" style="background-color: #f5f5f5;">
+						<div class="container">
+							<div class="row"> 
+								<div class="col-sm-12">
+								Drag and drop files to attach.
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px">
+								<div class="col-sm-12">
+									<div class="fileinput fileinput-new" data-provides="fileinput">
+									    <span class="btn btn-default btn-file"><span>Choose file</span>
+									    <!-- {{form1.file}} -->
+									    <input type="file" name="file" id="id_file" onchange="validate_fileupload(this.value);">
+									    </span>
+									    <span class="fileinput-filename"></span><span id="span_file" class="fileinput-new">No file chosen</span>
+
+									    <script type="text/javascript">
+									    
+									    function validate_fileupload(file)
+										{
+											console.log("inside function")
+										    var allowed_extensions = new Array("jpg","png","gif");
+										    var file_name = file.slice(12);   											
+											console.log("fileName: "+file_name)
+											$('#span_file').html(file_name)
+
+										}
+
+									    	
+									    </script>
+									
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+		
+		<div class="row" style="margin-left: 30px"> 
+			<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-plus-sign"></span> Create Ticket</button>
+			<a class="btn btn-danger" href="/tickets" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span> Cancel</a>
+		</div>
+		</div>
+	</form>
+	</div> 
+
+</div> 
+{% endblock %}

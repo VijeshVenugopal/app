@@ -1,0 +1,134 @@
+{% extends 'userbase.html' %}
+
+{% block content %}
+
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading panel-default"><h4><strong>Tickets</strong></h4>
+
+				<div class="row" >
+					
+
+					<div class= "col-sm-4">
+						<div class="alert alert-success text-center">
+						<strong>0-3 days</strong>
+						</div>	
+					</div>
+					<div class= "col-sm-4">
+						<div class="alert alert-warning text-center">
+						<strong>4-7 days</strong>
+						</div>		
+					</div>
+					<div class= "col-sm-4">
+						<div class="alert alert-danger text-center">
+							<strong>7+ days</strong>
+							
+						</div>	
+					</div>
+
+				</div>
+
+				<div class="row">
+				{% if  request.user.is_staff %}
+				<form method="POST" action=".">
+				{%csrf_token%}
+				<div class="col-sm-4">
+							<label for="prio">User:</label>
+						 <div id="prio">
+				  		{{form1.user}}
+						</div>
+
+					</div>
+					<div class="col-sm-4">
+						<label for="sta">Status:</label>
+									 <div id="sta">
+							  		
+							  		{{form1.status}}
+							  		
+									</div>
+									</div>
+
+						<label for="sta"></label>
+				<div id="sta">
+				
+				
+					<button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>&nbsp&nbsp
+					<a class="btn btn-primary" role="button" href="/tickets"><span class="glyphicon glyphicon-refresh"></span> Reset</a>	
+				</div>
+
+				</form>
+					{% endif %}
+			
+				</div>
+
+				
+
+
+		</div>
+		<div class="panel-body">
+			{%if not tickets%}
+			{% if not request.user.is_staff %}
+			<div class='pull-right' style="margin-top: 0px">
+	      		<a type='button' href="./create" class='btn btn-success'>New Ticket</a>
+	  		</div>
+	  	{% endif %}
+				<div class="alert alert-warning">
+			  		<strong>No Tickets to show!</strong> 
+				</div>
+				
+			{%endif%}
+
+			{% if tickets %}
+			
+				{% csrf_token %}
+
+				<div class="table-responsive">          
+				  <table class="table">
+				    <thead>
+				      <tr>
+				      
+				        <th>Title</th>				      
+				        <th>Type</th>
+				        <th>Status</th>
+				        <th>Priority</th>
+				        <th class="text-center1"><span style="margin-left: 50px">Action</span></th>
+				      </tr>
+				    </thead>
+				    <tbody>
+
+				{% for ticket in tickets %}
+
+					
+				      <tr class="{{ticket.color}}" style="color: black">
+				      
+						<td>{{ticket.title}}</td>
+				        <td>{{ticket.type}}</td>
+				        <td>{{ticket.status}}</td>
+				        <td>{{ticket.priority}}</td>
+				        <td>
+				        	<a type='button' href="http://ticket.com/tickets/edit/{{ticket.ticket_id}}" class='btn btn-info'>View</a>
+				        	{% if not request.user.is_staff %}
+				        	<a type='button' href="./delete/{{ticket.ticket_id}}" style="margin-left: 30px" class='btn btn-danger'>
+				        	Delete</a>
+				        	{% endif %}
+				        	
+				        </td>
+				      </tr>
+				    
+
+				{% endfor %}
+					</tbody>
+
+				</div>
+
+			
+			{% endif %}
+				
+	</div>
+
+</div>
+
+
+
+{% endblock %}

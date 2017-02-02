@@ -1,0 +1,92 @@
+
+	{% load static %}
+
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+		<meta name="google-signin-client_id" content="1016869792557-kfrt7pk3vjujjbtj8csl5cff8j9mphgk.apps.googleusercontent.com">
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ticketing System</title>
+
+	    <!-- Core CSS - Include with every page -->
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	    <!-- <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	   
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+	    
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	    <style type="text/css">
+	    	td{
+	    		padding: 5px;
+
+	    	}
+	    	/*.navbar.navbar-default{
+	    		background-color: #dff0d8;
+	    	}*/
+			.popover{
+			    background: #ff5656;
+			    width:300px;
+   				height:40px;
+   				color:white;
+			}
+			.popover.right .arrow:after {
+			  border-right-color: #ff5656;
+			}
+
+
+	    </style>
+	</head>
+
+	<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/" style="color: black">Ticketing System</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+     
+
+    
+       {% if request.path == "/signup/" %}
+	    <div class="nav navbar-nav navbar-right" style="margin-top: 8px;">
+			<a class="btn btn-success btn-block" role="button" href="/login"><span class="glyphicon glyphicon-log-in"></span>login</a>
+	      	
+	     </div>
+	     {% endif %}
+	     {% if request.path == "/login/" %}
+	    <div class="nav navbar-nav navbar-right" style="margin-top: 8px;">
+			<a class="btn btn-success btn-block" role="button" href="/signup"><span class="glyphicon glyphicon-plus"></span>SignUp</a>
+	      	
+	     </div>
+	     {% endif %}
+    </div>
+  </div>
+</nav>
+	
+
+	            {% block content %}
+	            {% endblock %}
+
+	    <!-- Core Scripts - Include with every page -->
+	   <!--  <script src = "{% static 'js/jquery.min.js' %}"></script>
+
+	    <script src = "{% static 'js/bootstrap.min.js' %}"></script> -->
+	    {% block javascript %}
+	    {% endblock %}
+
+	</body>
+
+	</html>
